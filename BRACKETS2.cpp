@@ -8,65 +8,67 @@ int c;
 char str[10000];
 vector<char> open;
 
-void func() {
+bool func() {
 	cin >> str;
-	bool pair;
+	bool pair = true;
 
-	int len = 0;//¹®ÀÚ¿­±æÀÌ
+	int len = 0;//ë¬¸ìì—´ê¸¸ì´
 	while (str[len])
 		len++;
 
 	for (int i = 0; i < len; i++) {
-		if (str[i] == '(' || str[i] == '{' || str[i] == '[') {//½ÃÀÛ °ıÈ£
+		if (str[i] == '(' || str[i] == '{' || str[i] == '[') {//ì‹œì‘ ê´„í˜¸
 			open.push_back(str[i]);
 		}
-		else {//Á¾·á °ıÈ£
+		else {//ì¢…ë£Œ ê´„í˜¸
 			if (open.empty())
-				pair = false;
+				return false;
+			if (!pair)
+				return false;
 			else {
 				char top = open.back();
 
 				switch (str[i]) {
 				case ')':
 					if (top == '(') {
-						pair = true;
 						open.pop_back();
 					}
+					else
+						pair = false;
 					break;
 				case '}':
 					if (top == '{') {
-						pair = true;
 						open.pop_back();
 					}
+					else
+						pair = false;
 					break;
 				case ']':
 					if (top == '[') {
-						pair = true;
 						open.pop_back();
 					}
-					break;
-				default:
-					pair = false;
+					else
+						pair = false;
 					break;
 				}
 			}
 		}
 	}
 
-	if (!open.empty())//ºñ¾îÀÖÁö ¾ÊÀ¸¸é Â¦ÀÌ ¾È¸ÂÀ½
+	if (!open.empty()) {//ë¹„ì–´ìˆì§€ ì•Šìœ¼ë©´ ì§ì´ ì•ˆë§ìŒ
 		pair = false;
-
-	if (pair)
-		cout << "YES" << endl;
-	else
-		cout << "NO" << endl;
-	open.clear();
+	}
+	return pair;
 }
 
 int main() {
 	cin >> c;
 	while (c-- > 0) {
-		func();
+		open.clear();
+		if (func())
+			cout << "YES" << endl;
+		else
+			cout << "NO" << endl;
 	}
 	return 0;
 }
