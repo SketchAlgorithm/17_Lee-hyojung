@@ -1,10 +1,11 @@
-//¹Ì»ı¹° °İ¸®
+//ë¯¸ìƒë¬¼ ê²©ë¦¬
+//ë§í•œ ì½”ë“œ :)
 #include <iostream>
 using namespace std;
 int T;
-int n, m, k;//¼¿ °³¼ö~100, °İ¸® ½Ã°£~1000, ±ºÁı °³¼ö~1000
+int n, m, k;//ì…€ ê°œìˆ˜~100, ê²©ë¦¬ ì‹œê°„~1000, êµ°ì§‘ ê°œìˆ˜~1000
 
-//±ºÁı À§Ä¡
+//êµ°ì§‘ ìœ„ì¹˜
 class Point {
 private:
 	int x, y;
@@ -17,10 +18,10 @@ public:
 	int get_y() { return this->y; }
 };
 
-//±ºÁı Á¤º¸(À§Ä¡, °³Ã¼¼ö, ¹æÇâ)
+//êµ°ì§‘ ì •ë³´(ìœ„ì¹˜, ê°œì²´ìˆ˜, ë°©í–¥)
 class Micro {
 private:
-	Point loc;//±ºÁı À§Ä¡
+	Point loc;//êµ°ì§‘ ìœ„ì¹˜
 	int micnum, dir;
 public:
 	Micro() {
@@ -51,18 +52,18 @@ public:
 	}
 };
 
-Micro map[100][100];//¼¿ ÆÇ
+Micro map[100][100];//ì…€ íŒ
 void init();
 void move(int i, int j);
 void move2(Micro &now, Micro &next);
 
 void init() {
-	//(0,0)À¸·Î ÃÊ±âÈ­
+	//(0,0)ìœ¼ë¡œ ì´ˆê¸°í™”
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
 			map[i][j] = Micro();
 
-	//map Å×µÎ¸® ¼³Á¤(dir=-1)
+	//map í…Œë‘ë¦¬ ì„¤ì •(dir=-1)
 	for (int i = 0; i < n; i++) {
 		map[0][i].set_dir(-1);
 		map[i][0].set_dir(-1);
@@ -70,7 +71,7 @@ void init() {
 		map[i][n - 1].set_dir(-1);
 	}
 
-	//k(±ºÁı °³¼ö ¸¸Å­) Á¤º¸ ÀÔ·Â
+	//k(êµ°ì§‘ ê°œìˆ˜ ë§Œí¼) ì •ë³´ ì…ë ¥
 	int x, y, micnum_, dir_;
 	for (int i = 0; i < k; i++) {
 		cin >> x >> y >> micnum_ >> dir_;
@@ -81,7 +82,7 @@ void init() {
 }
 
 void move(int i, int j) {
-	//¾àÇ°¿¡ µµÂøÇÑ °æ¿ì(°³Ã¼¼ö °¨¼Ò, ¹æÇâ ÀüÈ¯)
+	//ì•½í’ˆì— ë„ì°©í•œ ê²½ìš°(ê°œì²´ìˆ˜ ê°ì†Œ, ë°©í–¥ ì „í™˜)
 	if (map[i - 1][j].get_dir() == -1 ||
 		map[i + 1][j].get_dir() == -1 ||
 		map[i][j - 1].get_dir() == -1 ||
@@ -89,11 +90,11 @@ void move(int i, int j) {
 	{
 		int now_dir = map[i][j].get_dir();
 
-		//°³Ã¼¼ö Àı¹İ °¨¼Ò
+		//ê°œì²´ìˆ˜ ì ˆë°˜ ê°ì†Œ
 		int half = map[i][j].get_micnum() / 2;
 		map[i][j].set_micnum(half);
 
-		//¹æÇâ ÀüÈ¯
+		//ë°©í–¥ ì „í™˜
 		switch (now_dir) {
 		case 1:
 			map[i][j].set_dir(2);
@@ -110,18 +111,18 @@ void move(int i, int j) {
 		}
 	}
 
-	//¾àÇ°¿¡ µµÂøÇÏÁö ¾ÊÀº °æ¿ì ¹æÇâ´ë·Î ÇÑ Ä­ ÁøÇà
+	//ì•½í’ˆì— ë„ì°©í•˜ì§€ ì•Šì€ ê²½ìš° ë°©í–¥ëŒ€ë¡œ í•œ ì¹¸ ì§„í–‰
 	switch (map[i][j].get_dir()) {
-	case 1://»ó
+	case 1://ìƒ
 		move2(map[i][j], map[i - 1][j]);
 		break;
-	case 2://ÇÏ
+	case 2://í•˜
 		move2(map[i][j], map[i + 1][j]);
 		break;
-	case 3://ÁÂ
+	case 3://ì¢Œ
 		move2(map[i][j], map[i][j - 1]);
 		break;
-	case 4://¿ì
+	case 4://ìš°
 		move2(map[i][j], map[i][j + 1]);
 		break;
 	}
@@ -129,14 +130,14 @@ void move(int i, int j) {
 }
 
 void move2(Micro &now,Micro &next) {
-	//ÀÌµ¿ Àü ÇöÀç Ä­¿¡ »õ Á¤º¸ ÀÔ·Â
-	//´õ Å« ±ºÁıÀÇ ¹æÇâÀ¸·Î ÀüÈ¯(¹æÇâ)
+	//ì´ë™ ì „ í˜„ì¬ ì¹¸ì— ìƒˆ ì •ë³´ ì…ë ¥
+	//ë” í° êµ°ì§‘ì˜ ë°©í–¥ìœ¼ë¡œ ì „í™˜(ë°©í–¥)
 	if (now.get_micnum() < next.get_micnum()) {
 		now.set_dir(next.get_dir());
 	}
-	//°³Ã¼¼ö ÇÕ(°³Ã¼¼ö)
+	//ê°œì²´ìˆ˜ í•©(ê°œì²´ìˆ˜)
 	now.set_micnum(now.get_micnum() + next.get_micnum());
-	//À§Ä¡(À§Ä¡)
+	//ìœ„ì¹˜(ìœ„ì¹˜)
 	now.set_loc(next.get_locx(), next.get_locy());
 }
 
@@ -153,9 +154,9 @@ int main() {
 	int testcase = 1;
 	while (testcase <= T) {
 		cin >> n >> m >> k;
-		init();//map ÃÊ±â ¼³Á¤
+		init();//map ì´ˆê¸° ì„¤ì •
 
-		//m¹ø ¸¸Å­ ±ºÁı ÀÌµ¿
+		//më²ˆ ë§Œí¼ êµ°ì§‘ ì´ë™
 		while (m-- > 0) {
 			for (int i = 1; i < n - 1; i++) {
 				for (int j = 1; j < n - 1; j++) {
