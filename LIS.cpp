@@ -7,10 +7,12 @@ using namespace std;
 int n;
 vector<int> list;
 vector<int> answer;
+int ans_list[50];
+int ans_count = 0;
 int ans = 0;
 
 void func() {
-	
+	answer.clear();
 	answer.push_back(-1);
 	for (int i = 0; i < n; i++) {
 		int compare = answer.back();
@@ -30,20 +32,33 @@ void func() {
 		}
 	}
 
-	cout << ans << endl;
+	//cout << ans << endl;
+	ans_list[ans_count] = ans;
+	ans_count++;
 
 	//reverse(answer.begin(), answer.end());
-	for (int i = 1; i < answer.size(); i++)
-		cout << answer[i] << " ";
+	//for (int i = 1; i < answer.size(); i++)
+	//	cout << answer[i] << " ";
+	//cout << endl;
 }
 
 int main() {
-	cin >> n;
-	int num;
-	for (int i = 0; i < n; i++) {
-		cin >> num;
-		list.push_back(num);
+	int T;
+	cin >> T;
+	while (T-- > 0)
+	{
+		list.clear();
+		ans = 0;
+		cin >> n;
+		int num;
+		for (int i = 0; i < n; i++) {
+			cin >> num;
+			list.push_back(num);
+		}
+		func();
 	}
-	func();
+	for (int i = 0; i < ans_count;i++) {
+		cout << ans_list[i] << endl;
+	}
 	return 0;
 }
